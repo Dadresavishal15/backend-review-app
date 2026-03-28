@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 app.post("/submit", async (req, res) => {
     const data = new Review(req.body);
     await data.save();
-    res.send("Saved");
+    res.json({ message: "Saved" });
 });
 
 app.get("/reviews", async (req, res) => {
