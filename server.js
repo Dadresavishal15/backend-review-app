@@ -6,10 +6,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// CONNECT DB
-mongoose.connect("mongodb+srv://vishal:<db_password>@cluster0.pudps7l.mongodb.net/?appName=Cluster0");
+// ✅ MongoDB Atlas connection
+mongoose.connect("mongodb+srv://vishal:Vi9569@cluster0.pudps7l.mongodb.net/?appName=Cluster0")
+.then(() => console.log("MongoDB Connected ✅"))
+.catch(err => console.log("MongoDB Error ❌", err));
 
-// SCHEMA
+// Schema
 const reviewSchema = new mongoose.Schema({
     name: String,
     email: String,
@@ -19,17 +21,25 @@ const reviewSchema = new mongoose.Schema({
 
 const Review = mongoose.model("Review", reviewSchema);
 
-// API: Save data
+// Routes
+app.get("/", (req, res) => {
+    res.send("Server is running 🚀");
+});
+
 app.post("/submit", async (req, res) => {
     const data = new Review(req.body);
     await data.save();
     res.send("Saved");
 });
 
-// API: Get all
 app.get("/reviews", async (req, res) => {
     const data = await Review.find();
     res.json(data);
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+// ✅ IMPORTANT PORT FIX
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log("Server running on port", PORT);
+});
