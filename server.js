@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 // CONNECT DB
-mongoose.connect("mongodb://127.0.0.1:27017/reviewsDB");
+mongoose.connect("mongodb+srv://vishal:<db_password>@cluster0.pudps7l.mongodb.net/?appName=Cluster0");
 
 // SCHEMA
 const reviewSchema = new mongoose.Schema({
